@@ -14,15 +14,30 @@ using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-ll cnt[100];
-
 int main()
 {   
+    ll t,ii=0;
+    ll cnt[45];
+    cnt[0]=0;
     cnt[1]=1;
-    cnt[2]=1;
+    for(ll i=2;i<45;i++) cnt[i]=cnt[i-1]+cnt[i-2];
+    for(ll i=2;i<45;i++) cnt[i]+=cnt[i-1];
+    
+    cin>>t;
 
-    for(ll i=3;;i++){
-        cnt[i]=cnt[i-1]+1;
+    while(t--){
+        ll n,ok=0;
+        cin>>n;
+        string ans;
+        for(ll i=44;i>=0;i--){
+            if(cnt[i]<n){
+                ok=1;
+                ans+='1';
+                n-=(cnt[i]+1);
+            }
+            else if(ok) ans+='0';
+        }
+        cout<<"Case "<<++ii<<": "<<ans<<endl;
     }
 
     return 0;
